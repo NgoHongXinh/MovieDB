@@ -108,4 +108,36 @@ class MoviePlayingService implements MoviePlayingInterface{
 
   }
 
+  @override
+  Future getPopularList(BuildContext context, Map<String, dynamic> body) async {
+    try{
+      final res = await ApiDio.getInstance(context)!.createGet (
+          "https://api.themoviedb.org/3/movie/popular",
+          showLoading: true,
+          body: body,
+          context: context);
+      Map _resJson = jsonDecode(res.toString());
+      return _resJson;
+    } catch (e) {
+      log("LOIROI ${e.toString()}");
+      return  {};
+    }
+  }
+
+  @override
+  Future getUpcomingList(BuildContext context, Map<String, dynamic> body) async {
+    try{
+      final res = await ApiDio.getInstance(context)!.createGet (
+          "https://api.themoviedb.org/3/movie/upcoming",
+          showLoading: true,
+          body: body,
+          context: context);
+      Map _resJson = jsonDecode(res.toString());
+      return _resJson;
+    } catch (e) {
+      log("LOIROI ${e.toString()}");
+      return  {};
+    }
+  }
+
 }

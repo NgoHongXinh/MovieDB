@@ -6,4 +6,6 @@ abstract class MoviePlayingInterface {
   Future<dynamic> getProfileList(BuildContext context, Map<String, dynamic> body);
   Future<dynamic> getMovieDetail(BuildContext context, Map<String, dynamic> body, num id);
   Future<dynamic> getPersonMovie(BuildContext context, Map<String, dynamic> body, num id);
+  Future<dynamic> getPopularList(BuildContext context, Map<String, dynamic> body);
+  Future<dynamic> getUpcomingList(BuildContext context, Map<String, dynamic> body);
 }

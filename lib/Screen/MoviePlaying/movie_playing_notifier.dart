@@ -8,7 +8,9 @@ import 'package:provider/provider.dart';
 import '../../model/movie_detail_model.dart';
 import '../../model/movie_favorite_model.dart';
 import '../../model/movie_playing_model.dart';
+import '../../model/movie_popular_model.dart';
 import '../../model/movie_profile_model.dart';
+import '../../model/movie_upcoming_model.dart';
 import '../../model/person_movie_model.dart';
 import '../MovieDetail/movie_detail_screen.dart';
 import '../ProfileActor/person_movie_screen.dart';
@@ -17,6 +19,8 @@ import 'movie_playing_service.dart';
 
 class MovieListNotifier extends ChangeNotifier {
   List<MoviePlaying> movieList = [];
+  List<MoviePopularModel> popularList= [];
+  List<MovieUpcomingModel> upcomingList= [];
   List<MovieFavoriteModel> favoriteList = [];
   List<MovieProfileModel> profileList =[];
   List<PersonMovieModel> personMovieList = [];
@@ -26,6 +30,8 @@ class MovieListNotifier extends ChangeNotifier {
     getMovieList(context);
     getFavoriteList(context);
     getProfileList(context);
+    getPopularList(context);
+    getUpcomingList(context);
   }
 
 
@@ -90,6 +96,29 @@ class MovieListNotifier extends ChangeNotifier {
     resultList.forEach((element) {
       profileList.add(MovieProfileModel.fromJson(element));
       // resultList['know-for']
+    });
+
+
+    notifyListeners();
+  }
+  void getPopularList(BuildContext context) async{
+    Map jsonResult = await service.getPopularList(context,{});
+    List resultList = jsonResult['results'] as List;
+    resultList.forEach((element) {
+      popularList.add(MoviePopularModel.fromJson(element));
+
+    });
+
+
+    notifyListeners();
+  }
+
+  void getUpcomingList(BuildContext context) async{
+    Map jsonResult = await service.getUpcomingList(context,{});
+    List resultList = jsonResult['results'] as List;
+    resultList.forEach((element) {
+      upcomingList.add(MovieUpcomingModel.fromJson(element));
+
     });
 
 

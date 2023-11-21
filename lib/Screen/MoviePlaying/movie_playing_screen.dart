@@ -72,65 +72,224 @@ class MovieScreen extends StatelessWidget{
   Widget build(BuildContext context) {
     presenter = Provider.of<MovieListNotifier>(context);
 
-    return Container(
-      child: GridView.builder(
-          itemCount: presenter.movieList.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 2/3,
-              crossAxisCount: (MediaQuery.of(context).orientation == Orientation.landscape) ? 3 : 2),
-          itemBuilder: (context, int index){
-            return GestureDetector(
-              onTap: (){presenter.goMovieDetail(context, presenter.movieList[index].id ?? 0);},
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Card(
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: Theme.of(context).colorScheme.outline,
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  ),
-                  child: SizedBox(
-
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 2, color: Colors.black),
-                        image: DecorationImage(
-                          image: NetworkImage('https://image.tmdb.org/t/p/original/${presenter.movieList[index].posterPath}'),
-                          fit: BoxFit.fill,
-                          opacity: 0.8,
-                        ),
-                        color: Colors.black,
-                        borderRadius: const BorderRadius.all(Radius.circular(12)),
-                      ),
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+                child: Text('NOW PLAYING')
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.width*0.7,
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: presenter.movieList.length,
+                  // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  //     childAspectRatio: 1,
+                  //     crossAxisCount: (MediaQuery.of(context).orientation == Orientation.landscape) ?  : 1),
+                  itemBuilder: (context, int index){
+                    return GestureDetector(
+                      onTap: (){presenter.goMovieDetail(context, presenter.movieList[index].id ?? 0);},
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Card(
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.circular(12)),
+                          ),
+                          child: SizedBox(
+                            width: 180,
+                            height: 300,
                             child: Container(
-                              alignment: Alignment.center,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 2, color: Colors.black),
+                                image: DecorationImage(
+                                  image: NetworkImage('https://image.tmdb.org/t/p/original/${presenter.movieList[index].posterPath}'),
+                                  fit: BoxFit.fill,
+                                  opacity: 0.8,
+                                ),
+                                color: Colors.black,
+                                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                              ),
+                              child: Stack(
                                 children: [
-                                  Text(presenter.movieList[index].title ??'', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Text(presenter.movieList[index].title ??'', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  IconButton(
+                                      onPressed: (){ presenter.isPressAttention(index, context);},
+                                      icon: Icon(
+                                        Icons.favorite,color:presenter.pressedAttentions[index]==false?Colors.white:Colors.red.shade900,size: 40,)
+                                  )
                                 ],
                               ),
                             ),
                           ),
-                          IconButton(
-                              onPressed: (){ presenter.isPressAttention(index, context);},
-                              icon: Icon(
-                                Icons.favorite,color:presenter.pressedAttentions[index]==false?Colors.white:Colors.red.shade900,size: 40,)
-                          )
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }),
+                    );
+                  }),
+            ),
+          ),
+          Container(
+              child: Text('POPULAR')
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.width*0.7,
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: presenter.popularList.length,
+                  // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  //     childAspectRatio: 1,
+                  //     crossAxisCount: (MediaQuery.of(context).orientation == Orientation.landscape) ?  : 1),
+                  itemBuilder: (context, int index){
+                    return GestureDetector(
+                      onTap: (){presenter.goMovieDetail(context, presenter.popularList[index].id ?? 0);},
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Card(
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.circular(12)),
+                          ),
+                          child: SizedBox(
+                            width: 180,
+                            height: 300,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 2, color: Colors.black),
+                                image: DecorationImage(
+                                  image: NetworkImage('https://image.tmdb.org/t/p/original/${presenter.popularList[index].posterPath}'),
+                                  fit: BoxFit.fill,
+                                  opacity: 0.8,
+                                ),
+                                color: Colors.black,
+                                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                              ),
+                              child: Stack(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Text(presenter.popularList[index].title ??'', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  // IconButton(
+                                  //     onPressed: (){ presenter.isPressAttention(index, context);},
+                                  //     icon: Icon(
+                                  //       Icons.favorite,color:presenter.pressedAttentions[index]==false?Colors.white:Colors.red.shade900,size: 40,)
+                                  // )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+          ),
+          Container(
+            child: Text('UPCOMING'),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.width*0.7,
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: presenter.upcomingList.length,
+                  // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  //     childAspectRatio: 1,
+                  //     crossAxisCount: (MediaQuery.of(context).orientation == Orientation.landscape) ?  : 1),
+                  itemBuilder: (context, int index){
+                    return GestureDetector(
+                      onTap: (){presenter.goMovieDetail(context, presenter.upcomingList[index].id ?? 0);},
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Card(
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.circular(12)),
+                          ),
+                          child: SizedBox(
+                            width: 180,
+                            height: 300,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 2, color: Colors.black),
+                                image: DecorationImage(
+                                  image: NetworkImage('https://image.tmdb.org/t/p/original/${presenter.upcomingList[index].posterPath}'),
+                                  fit: BoxFit.fill,
+                                  opacity: 0.8,
+                                ),
+                                color: Colors.black,
+                                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                              ),
+                              child: Stack(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Text(presenter.upcomingList[index].title ??'', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  // IconButton(
+                                  //     onPressed: (){ presenter.isPressAttention(index, context);},
+                                  //     icon: Icon(
+                                  //       Icons.favorite,color:presenter.pressedAttentions[index]==false?Colors.white:Colors.red.shade900,size: 40,)
+                                  // )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
