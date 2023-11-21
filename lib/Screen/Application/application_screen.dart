@@ -3,9 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled/model/movie_playing_model.dart';
 
 import '../../core/routers.dart';
 import '../../splash/splash_screen.dart';
+import '../MoviePlaying/movie_playing_screen.dart';
 import 'application_notifier.dart';
 
 class ApplicationScreen extends StatefulWidget {
@@ -75,7 +77,7 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
                 theme: appNotifier.themeDefaultData,
                 debugShowCheckedModeBanner: false,
                 onGenerateRoute: Routers.generateRoute,
-                initialRoute: SplashScreen.routeName,
+                initialRoute: MoviePage.routeName,
               ),
             )));
   }

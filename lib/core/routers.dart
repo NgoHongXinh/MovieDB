@@ -17,8 +17,7 @@ class Routers {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-      // case SplashScreen.routeName:
-      //   return MaterialPageRoute(builder: (_) => SplashScreen());
+
       case MoviePage.routeName:
         return MaterialPageRoute(
             builder: (_)=> ChangeNotifierProvider<MovieListNotifier>(
